@@ -1,0 +1,154 @@
+
+.detail-head-inner{
+    margin: 11.45vw 4.16vw 2.08vw 4.16vw;
+}
+.portfol-tag-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25vw;
+    margin-bottom : 0.625vw;
+}
+
+.portfol-tag-wrap div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.25vw;
+}
+.portfol-tag-wrap p{
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1.04vw;
+    line-height: 1.66vw;
+    letter-spacing: 0%;
+    padding: 0.41vw 1.25vw;
+    border-radius: 1.25vw;
+    border: 1px solid #121212;
+}
+.portfol-tag-wrap .share-img{
+    width: 2.5vw; height: 2.5vw;
+    border-radius: 50%;
+    border: 1px solid #121212;
+    padding: 0.72vw;
+}
+.portfol-tag-wrap .share-img img{
+    width: 100%;
+    object-fit: contain;
+}
+
+.back-list-wrap a{
+    padding:0.625vw;
+    border: 1px solid #121212;
+    width: 2.5vw; height: 2.5vw;
+}
+.back-list-wrap img{
+    width: 100%;
+}
+
+.detail-head h2{
+    font-family: "Poppins";
+    font-weight: 700;
+    font-size: 4.16vw;
+    line-height: 4.89vw;
+    letter-spacing: 0%;
+    margin-bottom : 2.08vw;
+}
+.portfol-info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.83vw;
+    margin-bottom : 2.08vw;
+}
+.portfol-info span{
+    font-family: "Pretendard Variable";
+    font-weight: 400;
+    font-size: 0.83vw;
+    line-height: 1.25vw;
+    letter-spacing: 0%;
+}
+.portfol-description{
+    margin-bottom : 2.08vw;
+    max-width: 51.3vw;
+}
+.portfol-description p{
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 1.04vw;
+    line-height: 1.66vw;
+    letter-spacing: 0%;
+    word-break: keep-all;
+}
+.awards-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.83vw;
+    margin-bottom: 1.66vw;
+}
+.awards-wrap .awards-img{
+    width: 2.5vw; height: 2.5vw;
+}
+.awards-wrap .awards-img img{
+    width: 100%;
+}
+.go-site{
+    width: 10.93vw;
+    border: 1px solid #121212;
+    padding: 0.625vw 1.25vw;
+}
+.go-site a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 0.83vw;
+    line-height: 1.25vw;
+    letter-spacing: 0%;
+    color: #121212;
+}
+
+
+
+/* detail-main */
+.detail-head-img{
+    width: 100%;
+}
+.detail-head-img img{
+    width: 100%;
+}
+.detail-descript{
+    padding: 4.16vw;
+}
+.detail-descript h3{
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 4.16vw;
+    line-height: 4.89vw;
+    letter-spacing: 0%;
+}
+.detail-descript .detail-text{
+    margin-top: 1.66vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4.16vw;
+}
+.detail-descript .detail-text p{
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 0.833vw;
+    line-height: 1.25vw;
+    letter-spacing: 0%;
+    flex: 1 1;
+}
+section.detail-img-sec { width: 100%; font-size: 0; margin-bottom : 8.33vw; }
+.detail-img { width: 100%; }
+.detail-img img { width: 100%; }

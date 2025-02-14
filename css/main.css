@@ -1,0 +1,225 @@
+
+.main-thumbnail { padding: 11.45svw 0 0 0 ; }
+.main-head-2 { font-family: "Poppins"; font-weight: 700; font-size: 4.166vw; line-height: 94px; letter-spacing: 0%; margin: 0 0 2.08vw 4.166vw; }
+
+/* slide  */
+.slide-inner { width: 100%; height: 39.8vw; position: relative; }
+.slide-inner .slide-img-wrap { width: 100%; height: 39.8vw; position: absolute; overflow: hidden; }
+.slide-inner .slide-img-wrap img { width: 100%; object-fit: cover; }
+.slide-text-wrap { width: 100%; height: 100%; position: absolute; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; color: #fff; padding: 3.125vw 4.16vw; }
+.slide-top { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; }
+.slide-top .if { display: flex; justify-content: flex-end; align-items: center; gap: 1.25vw; }
+.slide-top .if .if-img { width: 3.22vw; }
+.slide-top .if .if-img img { width: 100%; }
+.slide-num { font-family: "Poppins"; font-weight: 700; font-size: 1.66vw; line-height: 2.5vw; letter-spacing: 0%; }
+.slide-text .slide-tag { font-family: "Poppins"; font-weight: 400; font-size: 0.83vw; line-height: 1.25vw; letter-spacing: 0%; padding: 0.31vw 1.25vw; border-radius: 24px; border: 1px solid #fff; }
+.slide-text .slide-head { font-family: "Poppins"; font-weight: 700; font-size: 4.16vw; line-height: 4.89vw; letter-spacing: 0%; margin: 0.625vw 0 2.08vw 0; }
+.slide-text .portfol-tag { display: flex; gap: 0.83vw; }
+.slide-text .portfol-tag span { font-family: "Pretendard Variable"; font-weight: 500; font-size: 0.83vw; line-height: 1.25vw; letter-spacing: 0%; }
+.slide-page { display: flex; justify-content: flex-end; }
+
+/* autoplay-progress */
+.autoplay-progress { position: absolute; right: 16px; bottom: 16px; z-index: 10; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; }
+.autoplay-progress svg { --progress: 0; position: absolute; left: 0; top: 0px; z-index: 10; width: 100%; height: 100%; stroke-width: 1px; stroke: white; fill: none; stroke-dashoffset: calc(125.6px * (1 - var(--progress))); stroke-dasharray: 125.6; transform: rotate(-90deg); }
+.swiper-pagination-bullet { width: 50px; height: 50px; text-align: center; line-height: 20px; font-size: 16px; color: #fff; opacity: 1; background: rgba(0, 0, 0, 0.2); }
+.swiper-pagination-bullet-active { color: #fff; background: none !important; }
+
+
+/* projects */
+.projects { margin-top: 6.25vw; margin-bottom: 160px; }
+.projects .project-inner { margin: 0 4.16vw; }
+.projects .project-inner .search { width: 100%; display: flex; justify-content: flex-start; align-items: center; gap: 1.66vw; border-radius: 12px; border: 1px solid #121212; padding: 1.04vw; }
+.search-img { width: 1.66vw; height: 1.66vw; }
+.search-img img { width: 100%; }
+.projects .project-inner .search form { width: 100%; height: 1.66vw; }
+.projects .project-inner .search input { font-size: 15px; color: #222222; width: 100%; height: 1.66vw; border: none; position: relative; background: none; z-index: 5; }
+.projects .project-inner .search input::placeholder { color: #888; font-family: "Poppins"; font-weight: 500; font-size: 1.04vw; line-height: 1.66vw; letter-spacing: 0%; }
+.projects .project-inner .search input:focus { outline: none; }
+label { position: absolute; color: #aaa; left: 50%; transform: translateX(-50%); font-size: 1.04vw; bottom: 8px; transition: all .2s; }
+.project-board { margin-top: 3.3vw; }
+.project-board .board-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 1.04vw; border-bottom: 1px solid #121212; }
+.project-board .board-top ul { display: flex; justify-content: flex-start; align-items: center; gap: 0.83vw; }
+.project-board .board-top ul li { font-family: "Poppins"; font-weight: 500; font-size: 1.04vw; line-height: 1.66vw; letter-spacing: 0%; padding: 0.41vw 1.25vw; border-radius: 1.25vw; border: 1px solid #121212; cursor: pointer; }
+.project-board .board-top ul li:nth-child(1) { background-color: #8CE457; border: 1px solid #8CE457; /* 카테고리 탭 전체는 처음에 세팅 */ }
+.project-board .board-top .change-layout { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+.project-board .board-top .change-layout div.change-img { width: 2.5vw; cursor: pointer; }
+.project-board .board-top .change-layout div.change-img img { width: 100%; }
+
+/* board 공용  */
+.board-wrap { min-height: 78.1vw; }
+.select-layout { display: none !important; }
+.more-wrap { width: 100%; display: flex; justify-content: center; align-items: center; }
+.more { font-family: "Poppins"; font-weight: 500; font-size: 1.041vw; line-height: 1.66vw; letter-spacing: 0%; text-align: center; background-color: #8CE457; border-radius: 1.25vw; padding: 0.41vw 1.25vw; margin: 3.33vw 0 0 0; }
+.hidden { display: none; }
+#list-load-more { display: none; }
+#gallery-load-more { /* display: none;  */ }
+
+/* 갤러리형 보드 */
+.board-gal { position: relative; width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.04vw; margin-top: 2.08vw; }
+.gal-item-wrap { max-width: 39.21vw; height: 39.84vw; overflow: hidden; }
+.gal-item { position: relative; }
+.gal-text { width: 100%; position: absolute; z-index: 5; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 2.08vw 1.66vw; }
+.gal-text p:nth-child(1) { font-family: "Noto Sans KR", serif; font-weight: 600; font-size: 1.25vw; line-height: 1.875vw; letter-spacing: 0%; }
+.gal-text p:nth-child(2) { font-family: "Pretendard Variable"; font-weight: 400; font-size: 0.83vw; line-height: 1.25vw; letter-spacing: 0%; padding: 0.31vw 1.04vw; border: 1px solid #fff; border-radius: 1.25vw; }
+.gal-hover { position: absolute; width: 100%; height: 39.84vw; z-index: 2; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #00664FCC; border-radius: 12px; opacity: 0; transition: all 0.4s; }
+.gal-hover:hover { opacity: 1; transition: all 0.4s; }
+.gal-hover:hover ~.gal-img img { transform: scale(1.1); transition: all 0.4s; }
+.hover-img-wrap { width: 50%; }
+.gal-hover img { width: 100%; }
+.gal-img { width: 100%; position: absolute; overflow: hidden; border-radius: 12px; }
+.gal-img img { width: 100%; transition: all 0.4s; }
+/* 갤러리형 보드 end  */
+
+/* 리스트형 보드  */
+.board-list { /* display: none; */}
+.this-year h5 { font-family: "Poppins"; font-weight: 700; font-size: 6.25vw; line-height: 9.375vw; letter-spacing: 0%; border-bottom: 1px solid #121212;; margin-top: 2.08vw; }
+.list a { color: #121212; position: relative; display: grid; grid-template-columns: 3fr 2fr 1fr 1fr; padding: 1.04vw 0.729vw; border-bottom: 1px solid #121212; cursor: none; }
+.list span { font-family: "Poppins"; font-weight: 400; font-size: 1.25vw; line-height: 2.5vw; letter-spacing: 0%; }
+.list-awards { display: flex; flex-direction: row; justify-content: flex-end; gap: 0.833vw; }
+.list-award-img { width: 2.5vw; height: 2.5vw; }
+.list-awards img { width: 100%; }
+.list-hover-img { display: none; position: absolute; width: 340px; height: 220px; pointer-events: none; z-index: 5; }
+.list-hover-img img { width: 100%; max-height: 220px; object-fit: cover; }
+
+
+/* 반응형 */
+@media (max-width: 768px){
+    /* header{ display: none !important;} */
+    .main-thumbnail{
+        padding: 24vw 0 0 0 ;
+    }
+    .main-head-2{
+        font-size: 8.53vw;
+        line-height: 8.53vw;
+        margin: 0 0 5.06vw 4.26vw;
+    }
+
+    /* swiper */
+    .autoplay-progress{ display: none;}
+    .slide-inner {
+        width: 100%;
+        height: 124.5vw;
+        position: relative;
+    }
+
+    .slide-inner .slide-img-wrap {
+        width: 100%;
+        height: 124.5vw;
+        position: absolute;
+        overflow: hidden;
+    }
+    .slide-inner .slide-img-wrap img{
+        height: 100%;
+    }
+    .slide-text-wrap {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 6.4vw 5.33vw;
+    }
+    .slide-num{
+        display: none;
+    }
+    .slide-top .if {
+        position: absolute;
+        right: 6.4vw; top: 6.4vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+    }
+    .slide-top .if .if-img {
+        width: 8.53vw; height: 8.53vw;
+    }
+    .slide-text {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .slide-text .slide-tag {
+        font-size: 4.26vw;
+        line-height: 6.4vw;
+        padding: 1.6vw 6.4vw;
+        border-radius: 6.4vw;
+    }
+    .slide-text .slide-head {
+        font-size: 8.53vw;
+        line-height: 8.53vw;
+    }
+    .slide-text .portfol-tag span {
+        font-size: 3.2vw;
+        line-height: 6.4vw;
+    }
+
+    /* projects */
+    .projects .project-inner div.search{
+        display: none;
+    }
+    .projects .project-board .change-layout{
+        display: none;
+    }
+    .project-board .board-top{
+        border: none;
+    }
+    .projects .board-top ul{
+        position: relative;
+        width: 100vw;
+        gap: 1.83vw;
+        overflow-x: scroll;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    .projects .board-top ul li{
+        display: inline-block;
+        font-size: 3.73vw;
+        line-height: 4.26vw;
+        border-radius: 6.4vw;
+        padding: 2.13vw 6.4vw
+    }
+    .board-wrap .board-gal{
+        display: block;
+    }
+    .board-wrap .board-gal .gal-text{
+        padding: 8vw 5.33vw;
+    }
+    .board-wrap .board-gal .gal-text p{
+        font-size: 6.4vw;
+        line-height: 7.4vw;
+    }
+    .board-wrap .board-gal .gal-text p:nth-child(2){
+        display: none; 
+        padding: 2.13vw 6.4vw;
+        border-radius: 6.4vw;
+    }
+    .board-wrap .board-gal .gal-item-wrap{
+        max-width: 100%;
+        height: 100%;
+        position: static;
+        margin-bottom: 4vw;
+    }
+    .board-wrap .board-gal .gal-item-wrap .gal-img-wrap{
+        height: 122.6vw;
+    }
+    .board-wrap .board-gal .gal-item-wrap .gal-img-wrap .gal-img{
+
+        border-radius: 6.4vw;
+        overflow: hidden;
+    }   
+    .board-wrap .board-gal .gal-item-wrap .gal-hover{
+        display: none;
+    }
+    .more#gallery-load-more{
+        font-size: 5.3vw;
+        line-height: 6.4vw;
+        border-radius: 6.4vw;
+        padding: 8px 6.4vw;
+    }
+}
