@@ -176,6 +176,10 @@ label { position: absolute; color: #aaa; left: 50%; transform: translateX(-50%);
         overflow-x: scroll;
         flex-wrap: nowrap;
         white-space: nowrap;
+        -ms-overflow-style: none;
+    }
+    .projects .board-top ul::-webkit-scrollbar{
+        display:none;
     }
     .projects .board-top ul li{
         display: inline-block;

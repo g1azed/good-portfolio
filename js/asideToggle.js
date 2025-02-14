@@ -14,6 +14,7 @@ window.onload = function () {
     const close = document.querySelector(".head-list-close")
     
     mo_hamburger.addEventListener("click", () => {
+        console.log("클릭")
         mo_head_list.classList.remove("list-hidden")
     })
 
