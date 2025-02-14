@@ -126,6 +126,7 @@ aside { position: fixed; top: 23.125vw; right: 0; display: flex; flex-direction:
     .footer-bottom span{
         font-size: 4.26vw;
         line-height:4.26vw;
+        color: #121212;
     }
     .footer-bottom span:nth-child(1){
         width: 65vw;
