@@ -225,5 +225,6 @@ label { position: absolute; color: #aaa; left: 50%; transform: translateX(-50%);
         line-height: 6.4vw;
         border-radius: 6.4vw;
         padding: 8px 6.4vw;
+        color: #121212;
     }
 }
