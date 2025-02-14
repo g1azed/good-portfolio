@@ -7,4 +7,17 @@ window.onload = function () {
         aside.classList.toggle(toggle_class);
         console.log("toggle")
     })
+
+    /* mobile header */
+    const mo_hamburger = document.querySelector(".hamburger");
+    const mo_head_list = document.querySelector(".header-content");
+    const close = document.querySelector(".head-list-close")
+    
+    mo_hamburger.addEventListener("click", () => {
+        mo_head_list.classList.remove("list-hidden")
+    })
+
+    close.addEventListener("click" ,() =>{
+        mo_head_list.classList.add("list-hidden")
+    })
 };

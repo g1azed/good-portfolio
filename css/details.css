@@ -152,3 +152,47 @@
 section.detail-img-sec { width: 100%; font-size: 0; margin-bottom : 8.33vw; }
 .detail-img { width: 100%; }
 .detail-img img { width: 100%; }
+
+
+@media (max-width: 768px){
+    .detail-head-inner { margin: 13.45vw 4.16vw 21.3vw 4.16vw }
+    .portfol-tag-wrap .back-list-wrap { display: none; }
+    .portfol-tag-wrap > div { width: 100%; justify-content: space-between; }
+    .portfol-tag-wrap button .share-img{ width: 100%; justify-content: center; }
+    .portfol-tag-wrap p { font-size: 4.26vw; line-height: 8.5vw; border-radius: 48px; padding: 2.13vw 6.4vw; }
+    .portfol-tag-wrap button .share-img { width: 12.8vw; height: 12.8vw; }
+    .portfol-tag-wrap button .share-img img{ width: 55%;  }
+    .detail-head h2 { font-size: 8.5vw; line-height: 9.6vw; padding: 4.26vw 0 0.533vw 0; }
+    .portfol-info { gap: 14px; margin-bottom: 8vw; }
+    .portfol-info span { font-size: 4.26vw; line-height: 6.4vw; }
+    .portfol-description { max-width: 100%; }
+    .portfol-description p { font-size: 3.7vw; line-height: 5.86vw; }
+    .awards-wrap { gap: 1.3vw; margin: 5.33vw 0 13.33vw 0; }
+    .awards-wrap .awards-img { width: 12vw; height: 12vw; }
+    .go-site { width: 56vw; padding: 3.2vw 6.4vw; }
+    .go-site a { font-size: 4.26vw; line-height: 6.4vw; }
+
+    .detail-head-img{
+        width: auto;
+        height: 162.13vw;
+    }
+    .detail-head-img img{
+        width: auto; height: 100%;
+        margin: 0 auto;
+    }
+    .detail-descript{
+        padding: 13.86vw 5.33vw; 
+    }
+    .detail-descript .detail-text{
+        flex-direction: column;
+    }
+    .detail-descript h3{
+        font-size: 8.5vw; 
+        line-height: 9.6vw;
+        margin-bottom: 16vw;
+    }
+    .detail-descript .detail-text p{
+        font-size: 3.73vw;
+        line-height: 6.4vw;
+    }
+}

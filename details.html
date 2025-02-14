@@ -11,18 +11,39 @@
 </head>
 <body>
     <header>
-        <div class="header-inner">
-            <a href="./main.html"> <div class="header-logo mo-hide"> <img src="./assets/logo/good-mood_logo_g.svg" alt="기분좋은커뮤니케이션 로고" /> </div> </a>
-            <a href="./main.html">  <div class="header-logo pc-hide"> <img src="./assets/logo/good-mood_logo_g.svg" alt="기분좋은커뮤니케이션 로고" /> </div>  </a>
-            <ul class="mo-hide">
+        <div class="header-inner-pc mo-hide">
+            <div class="header-logo-wrap">
+                <a href="./main.html"> <div class="header-logo"> <img  src="./assets/logo/good-mood_logo_g.svg" alt="기분좋은커뮤니케이션 로고" /> </div> </a>
+            </div>
+            <ul>
                 <li> <a href="/"> Portfolio </a> </li>
                 <li> <a href="/"> Project Request </a> </li>
                 <li> <a href="/"> Contact Us </a> </li>
                 <li> <a href="/"> iWell Blog </a> </li>
             </ul>
-            <div aria-label="모바일 햄버거바" class="pc-hide"> 
-                <img src="./assets/icons/good-mood-hamberger.svg" alt="gnb 모바일 햄버거바" />
+        </div>
+        <div class="header-inner-mo pc-hide">
+            <div class="header-logo-wrap">
+                <a href="./main.html">  <div class="header-logo pc-hide"> <img src="./assets/logo/good-mood_logo_g_mo.svg" alt="기분좋은커뮤니케이션 로고" /> </div>  </a>
             </div>
+            <button aria-label="모바일 햄버거바" class="hamburger pc-hide"> 
+                <img src="./assets/icons/good-mood-hamberger.svg" alt="gnb 모바일 햄버거바" />
+            </button>
+
+        </div>
+        <div class="header-content list-hidden">
+            <ul>
+                <li> 
+                    <a href="/"> 
+                        <img  src="./assets/logo/good-mood_logo_g.svg" alt="기분좋은커뮤니케이션 로고" /> 
+                    </a> 
+                    <button class="head-list-close"> X</button>
+                </li>
+                <li> <a href="/"> Portfolio </a> </li>
+                <li> <a href="/"> Project Request </a> </li>
+                <li> <a href="/"> Contact Us </a> </li>
+                <li> <a href="/"> iWell Blog </a> </li>
+            </ul>
         </div>
     </header>
     <main>
@@ -123,5 +144,6 @@
     </footer>
 
     <script src="./js/asideToggle.js"></script>
+    
 </body>
 </html>

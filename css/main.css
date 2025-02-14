@@ -48,7 +48,7 @@ label { position: absolute; color: #aaa; left: 50%; transform: translateX(-50%);
 /* board 공용  */
 .board-wrap { min-height: 78.1vw; }
 .select-layout { display: none !important; }
-.more-wrap { width: 100%; display: flex; justify-content: center; align-items: center; }
+.more-wrap { width: 100%; display: flex; justify-content: center; align-items: center; color: #121212;}
 .more { font-family: "Poppins"; font-weight: 500; font-size: 1.041vw; line-height: 1.66vw; letter-spacing: 0%; text-align: center; background-color: #8CE457; border-radius: 1.25vw; padding: 0.41vw 1.25vw; margin: 3.33vw 0 0 0; }
 .hidden { display: none; }
 #list-load-more { display: none; }
