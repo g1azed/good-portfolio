@@ -8,7 +8,7 @@ export function setupListMoreView() {
 
     // ✅ 갤러리 모드일 경우 리스트 More View 버튼 숨기기 (초기 로드 시)
     if (lay_gallery.classList.contains("select-layout")) {
-        console.log("📌 갤러리 모드 감지됨, List More View 버튼 숨김 (초기)");
+        // console.log("📌 갤러리 모드 감지됨, List More View 버튼 숨김 (초기)");
         listMoreView.style.display = "none";
         return;
     }
@@ -33,7 +33,7 @@ export function setupListMoreView() {
 
 // ✅ More View 버튼 클릭 이벤트 핸들러
 function handleMoreViewClick() {
-    console.log("🔽 More View 버튼 클릭됨");
+    // console.log("🔽 More View 버튼 클릭됨");
 
     increaseVisibleCount();
     renderBoardList(getCurrentCategory(), true);
@@ -50,7 +50,7 @@ function updateMoreViewButton() {
 
     // ✅ 갤러리 모드일 경우 리스트 More View 버튼 숨김
     if (lay_gallery.classList.contains("select-layout")) {
-        console.log("📌 갤러리 모드 감지됨, List More View 버튼 숨김 (업데이트)");
+        // console.log("📌 갤러리 모드 감지됨, List More View 버튼 숨김 (업데이트)");
         listMoreView.style.display = "none";
         // ✅ 현재 필터링된 프로젝트 수와 visibleCount 비교
         if (filteredProjects.length > getVisibleCount()) {

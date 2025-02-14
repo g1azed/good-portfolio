@@ -48,8 +48,6 @@ function responsiveSwiper() {
 	}
 }
 
-
-
 // 기본 autoplay delay (예: 4500ms)
 const autoplayDelay = 4500; 
 let remainingTime = autoplayDelay; // 남은 시간(ms)
@@ -127,14 +125,27 @@ function stopCustomAutoplay() {
     isAutoPlaying = false;
 }
 
+// 전역 변수에 사용자 일시정지 여부 플래그 추가
+let userPaused = false;
 const progressBtn = document.querySelector(".autoplay-progress");
+// progressBtn.addEventListener('click', () => {
+//     if (isAutoPlaying) {
+//         stopCustomAutoplay();
+//         console.log("정지, 저장 진행률:", storedProgressFraction, "남은 시간:", remainingTime);
+//     } else {
+//         startCustomAutoplay();
+//         // console.log("재시작, 저장 진행률:", storedProgressFraction, "남은 시간:", remainingTime);
+//     }
+// });
 progressBtn.addEventListener('click', () => {
-    if (isAutoPlaying) {
+    if (!userPaused) {
         stopCustomAutoplay();
+        userPaused = true;
         console.log("정지, 저장 진행률:", storedProgressFraction, "남은 시간:", remainingTime);
     } else {
+        userPaused = false;
         startCustomAutoplay();
-        // console.log("재시작, 저장 진행률:", storedProgressFraction, "남은 시간:", remainingTime);
+        console.log("재시작, 저장 진행률:", storedProgressFraction, "남은 시간:", remainingTime);
     }
 });
 
