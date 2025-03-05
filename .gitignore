@@ -143,3 +143,5 @@ node_modules/.vite/deps/three.js
 node_modules/.vite/deps/_metadata.json
 node_modules/.package-lock.json
 node_modules/
+.DS_Store
+.DS_Store
