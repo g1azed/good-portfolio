@@ -20,6 +20,14 @@
     <link rel="stylesheet" href="reset.css"> 
     <link rel="stylesheet" href="./css/hf.css"> 
     <link rel="stylesheet" href="./css/index.css"> 
+
+    <style>
+        .space{
+            width: 100%;
+            height: 50vh;
+ 
+        }
+    </style>
 </head>
 <body>
     <!-- npx vite -->
@@ -71,12 +79,38 @@
                 <button class="aside-img-wrap"> <img src="./assets/icons/Inquiry.svg" /> <span> 문의 </span></button>
             </div>
         </aside>
+        <!-- 이후 삭제 -->
+        <div class="space" > </div>
+
         <section>
-            <div id="glass-lens-container"></div>
+            <div id="glass-lens-container">   </div>
+            <div id="veil">
+                <div id="progress-bar"><div id="progress"></div></div>
+            </div>
         </section>
         <section>
             <div id="warp-div"> </div>
         </section>
+
+        <!-- 이후 삭제 -->
+        <div class="space" > </div>
+
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+              <div class="carousel">
+                <div class="carousel__cell">1</div>
+                <div class="carousel__cell">2</div>
+                <div class="carousel__cell">3</div>
+                <div class="carousel__cell">4</div>
+                <div class="carousel__cell">5</div>
+                <div class="carousel__cell">6</div>
+                <div class="carousel__cell">7</div>
+                <div class="carousel__cell">8</div>
+                <div class="carousel__cell">9</div>
+  
+              </div>
+            </div>
+        </div>
 
 
     </main>
@@ -100,8 +134,13 @@
 
 
 
-    <script src="./js/asideToggle.js"></script>
+
+    <!-- <script type="module" src="./js/test.js"> </script> -->
     <script type="module" src="./js/index.js"> </script>
     <script type="module" src="./js/warp.js"> </script>
+    <script src="./js/asideToggle.js"></script>
+    <script src="./js/carousel.js"></script>
 </body>
 </html>
+
+

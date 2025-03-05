@@ -5,23 +5,15 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // 1. 기본 씬 설정
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x222222); // ✅ 배경을 제거하여 유리 효과 극대화
+scene.background = null; // ✅ 배경을 제거하여 유리 효과 극대화
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(0, 2, 3);
+camera.position.set(0, 1, 3);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000000, 0); // ✅ 배경을 투명하게 설정
 document.body.appendChild(renderer.domElement);
-
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5);
-scene.add(light);
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-
 
 // 2. HDR 환경맵 로드 (유리 반사 최적화)
 const rgbeLoader = new RGBELoader();
@@ -54,69 +46,28 @@ function createTextCanvasTexture(text) {
 }
 
 // 4. Plane을 GLB 모델 뒤에 배치
-const renderTarget = new THREE.WebGLRenderTarget(512, 512);
-const textTexture = createTextCanvasTexture("Hello World");
-
+const textTexture = createTextCanvasTexture("Refraction Test");
 const textMaterial = new THREE.MeshBasicMaterial({ map: textTexture, transparent: true });
 const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), textMaterial);
 textPlane.position.set(0, 0, -2); // ✅ GLB 모델 뒤에 배치
 scene.add(textPlane);
 
-
-
-function captureRenderTarget() {
-    renderer.setRenderTarget(renderTarget);
-    renderer.clear();
-    renderer.render(scene, camera);
-    renderer.setRenderTarget(null);
+// 5. 유리 GLB 모델이 Plane을 비추도록 설정
+function createGlassMaterial() {
+    return new THREE.MeshPhysicalMaterial({
+        transmission: 1.0,  // ✅ 완전한 유리
+        thickness: 0.3,     // ✅ 두께 조정 (너무 크면 왜곡이 심해질 수 있음)
+        roughness: 0.01,    // ✅ 거칠기 최소화 (투명도 향상)
+        ior: 1.52,          // ✅ 굴절률 최적화 (1.5~1.7 조정 가능)
+        clearcoat: 1.0,     // ✅ 표면 반사 효과 적용
+        clearcoatRoughness: 0.05,
+        envMapIntensity: 2.0, // ✅ 환경맵 반사 강도 조정
+        transparent: true,  // ✅ 투명하게 설정
+        opacity: 1,         // ✅ 완전한 투명도 유지
+        depthWrite: false,  // ✅ GLB 내부에서 Plane이 보이도록 설정
+        side: THREE.DoubleSide, // ✅ 유리 양면을 적용
+    });
 }
-
-const glassMaterial = new THREE.ShaderMaterial({
-    uniforms: {
-        uTexture: { value: textTexture },
-        uRefractionRatio: { value: 1.2 },
-        uDistortion: { value: 0.05 },
-        baseColor: { value: new THREE.Color(0.3, 0.3, 0.3) } // 예시 기본 색상
-    },
-    vertexShader: `...`,
-    fragmentShader: `...`, // 위 수정된 코드 적용
-    transparent: true,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-    vertexShader: `
-        varying vec2 vUv;
-        void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-    `,
-    fragmentShader: `
-            uniform sampler2D uTexture;
-            uniform float uRefractionRatio;
-            uniform float uDistortion;
-            uniform vec3 baseColor;
-            varying vec2 vUv;
-
-            void main() {
-                vec2 distortedUV = vUv;
-                distortedUV.x += sin(distortedUV.y * 10.0) * uDistortion;
-                vec4 texColor = texture2D(uTexture, distortedUV);
-
-                float refraction = uRefractionRatio * (texColor.r - 0.5);
-                vec2 refractedUV = vUv + refraction * vec2(0.02, 0.02);
-                vec4 finalColor = texture2D(uTexture, refractedUV);
-                
-                // baseColor를 추가하여 텍스처가 투명한 부분에도 색상을 보이도록 함
-                gl_FragColor = vec4(finalColor.rgb + baseColor * (1.0 - texColor.a), 0.8);
-            }
-
-    `,
-    transparent: true,  // ✅ 투명 재질 허용
-    depthWrite: false,  // ✅ 깊이 버퍼 쓰기 비활성화 (투명 모델 처리 문제 방지)
-    side: THREE.DoubleSide // ✅ 양면 렌더링 설정
-});
-
-
 
 // 6. GLB 모델 로드 및 유리 재질 적용
 const loader = new GLTFLoader();
@@ -124,20 +75,14 @@ loader.load('../assets/glb/good.glb', function (gltf) {
     const model = gltf.scene;
     model.traverse((child) => {
         if (child.isMesh) {
-            child.material = glassMaterial; // ✅ ShaderMaterial 적용
+            child.material = createGlassMaterial();
         }
     });
 
     model.position.set(0, 0, 0);
     model.scale.set(100, 100, 100);
     scene.add(model);
-
-    const box = new THREE.Box3().setFromObject(model);
-    console.log("모델 크기:", box.getSize(new THREE.Vector3())); // ✅ 모델 크기 확인
 });
-
-
-
 
 // 7. OrbitControls 추가
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -146,8 +91,6 @@ controls.enableDamping = true;
 // 8. 애니메이션 루프 (GLB가 Plane을 통해 보이도록 설정)
 function animate() {
     requestAnimationFrame(animate);
-
-    captureRenderTarget();
     controls.update();
     renderer.render(scene, camera);
 }

@@ -1,3 +1,56 @@
-#glass-lens-container{
+#glass-lens-container {
     height: 1000px;
+}
+#text {
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	text-align: center;
+	z-index: 100;
+	display:block;
+}
+
+
+/* 시점을 캐러셀 중심으로 이동 */
+.carousel-container {
+    width: 100vw;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    /* 원근감 적용 */
+    perspective-origin: 50% 50%;
+
+    
+}
+
+.carousel-wrapper {
+    position: relative;
+    transform-style: preserve-3d; 
+    transform: translateZ(910px) rotateY(30deg)  rotateZ(6deg);
+    /* 🔹 사용자가 원하는 시점 유지 */
+    will-change: transform;
+}
+
+.carousel {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-out;
+}
+
+.carousel__cell {
+    transform: rotateY(180deg);
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-right: 20px;
 }
