@@ -10,7 +10,7 @@ const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerH
 camera.position.set(0, 0, 5);
 
 const container = document.getElementById("warp-div");
-console.log(container)
+// console.log(container)
 
 const renderer = new THREE.WebGLRenderer({  antialias: true });
 // renderer.setPixelRatio( window.devicePixelRatio );

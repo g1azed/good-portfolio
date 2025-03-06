@@ -3,159 +3,141 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-// 1. 기본 씬 설정
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x222222); // ✅ 배경을 제거하여 유리 효과 극대화
+import { createComposer, createCamera, createRenderer, runApp, updateLoadingProgressBar } from "./core-utils.js";
+import { loadHDRI } from "./common-utils.js";
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(0, 2, 3);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000000, 0); // ✅ 배경을 투명하게 설정
-document.body.appendChild(renderer.domElement);
-
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5);
-scene.add(light);
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+import EnvMap from "../assets/empty_warehouse_01_4k.hdr";
+import TransmissionShader from "../assets/shaders/transmission_pars_fragment.glsl?raw"; // 👈 ?raw 추가
 
 
-// 2. HDR 환경맵 로드 (유리 반사 최적화)
-const rgbeLoader = new RGBELoader();
-const pmremGenerator = new THREE.PMREMGenerator(renderer);
-rgbeLoader.load('../assets/glb/empty_warehouse_01_4k.hdr', function (texture) {
-    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-    scene.environment = envMap;
-    pmremGenerator.dispose();
+// 나머지 로직은 기존과 동일
+THREE.ColorManagement.enabled = true;
+
+const params = {
+    thickness: 1,
+};
+
+// Create the scene
+let scene = new THREE.Scene();
+
+// Create the renderer
+let renderer = createRenderer({ antialias: true }, (_renderer) => {
+    // 최신 Three.js 버전 호환성을 위해 변경
+    _renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 });
 
-// 3. 텍스트 Plane (GLB 뒤에 배치하여 투과 테스트)
-function createTextCanvasTexture(text) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 1024;
-    canvas.height = 512;
 
-    ctx.fillStyle = 'rgba(255,255,255,0)'; // ✅ 배경을 투명하게 설정
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Create the camera
+let camera = createCamera(45, 1, 100, { x: 0, y: 0, z: 5 });
 
-    ctx.fillStyle = 'black';
-    ctx.font = 'bold 120px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+let app = {
+    async initScene() {
+        // OrbitControls
+        // this.controls = new OrbitControls(camera, renderer.domElement);
+        // this.controls.enableDamping = true;
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
-    return texture;
-}
+        await updateLoadingProgressBar(0.1);
 
-// 4. Plane을 GLB 모델 뒤에 배치
-const renderTarget = new THREE.WebGLRenderTarget(512, 512);
-const textTexture = createTextCanvasTexture("Hello World");
+        let envMap = await loadHDRI(EnvMap);
+        await updateLoadingProgressBar(0.3);
 
-const textMaterial = new THREE.MeshBasicMaterial({ map: textTexture, transparent: true });
-const textPlane = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), textMaterial);
-textPlane.position.set(0, 0, -2); // ✅ GLB 모델 뒤에 배치
-scene.add(textPlane);
+        // 텍스처 배경 추가
+        const ctx = document.createElement("canvas").getContext("2d");
+        ctx.canvas.width = 2048;
+        ctx.canvas.height = 2048;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.fillStyle = "#FFF";
+        ctx.font = "bold 512px Helvetica";
+        ctx.textAlign = "center";
+        ctx.fillText("Release", 1024, 768, 2048);
+        ctx.fillText("Your", 1024, 1248, 2048);
+        ctx.fillText("Power", 1024, 1728, 2048);
+        const texture = new THREE.CanvasTexture(ctx.canvas);
+
+        const plane = new THREE.PlaneGeometry(4, 4, 1, 1);
+        const mat = new THREE.MeshBasicMaterial({
+            map: texture,
+        });
+        const bg = new THREE.Mesh(plane, mat);
+        scene.add(bg);
+
+        // 기존 Geometry 제거 후 GLTF 모델 로드
+        let refractionMaterial = new THREE.MeshPhysicalMaterial({
+            thickness: 0.01,
+            roughness: 0.15,
+            transmission: 1,
+            envMap: envMap,
+            side: THREE.DoubleSide,
+        });
+
+        // GLTF 모델 로드'
+        const pivot = new THREE.Object3D();
+        scene.add(pivot);
 
 
+        let loader = new GLTFLoader();
+        loader.load( "../assets/glb/good.glb", (gltf) => {
+                const model = gltf.scene;
 
-function captureRenderTarget() {
-    renderer.setRenderTarget(renderTarget);
-    renderer.clear();
-    renderer.render(scene, camera);
-    renderer.setRenderTarget(null);
-}
+                // 모델 내부의 모든 Mesh에 Material 적용
+                model.traverse((child) => {
+                    if (child.isMesh) {
+                        child.material = refractionMaterial;
+                    }
+                });
 
-const glassMaterial = new THREE.ShaderMaterial({
-    uniforms: {
-        uTexture: { value: textTexture },
-        uRefractionRatio: { value: 1.2 },
-        uDistortion: { value: 0.05 },
-        baseColor: { value: new THREE.Color(0.3, 0.3, 0.3) } // 예시 기본 색상
-    },
-    vertexShader: `...`,
-    fragmentShader: `...`, // 위 수정된 코드 적용
-    transparent: true,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-    vertexShader: `
-        varying vec2 vUv;
-        void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-    `,
-    fragmentShader: `
-            uniform sampler2D uTexture;
-            uniform float uRefractionRatio;
-            uniform float uDistortion;
-            uniform vec3 baseColor;
-            varying vec2 vUv;
-
-            void main() {
-                vec2 distortedUV = vUv;
-                distortedUV.x += sin(distortedUV.y * 10.0) * uDistortion;
-                vec4 texColor = texture2D(uTexture, distortedUV);
-
-                float refraction = uRefractionRatio * (texColor.r - 0.5);
-                vec2 refractedUV = vUv + refraction * vec2(0.02, 0.02);
-                vec4 finalColor = texture2D(uTexture, refractedUV);
+                // 모델의 위치 및 크기 조정
+                pivot.add(model)
                 
-                // baseColor를 추가하여 텍스처가 투명한 부분에도 색상을 보이도록 함
-                gl_FragColor = vec4(finalColor.rgb + baseColor * (1.0 - texColor.a), 0.8);
+                model.position.set( -1 , -0.5 , 0); 
+                model.scale.set(100, 100, 100);
+
+                // 기존 this.mesh 대체
+                this.mesh = model;
+                scene.add(this.mesh);
+            },
+            undefined,
+            (error) => {
+                console.error("GLTF 로드 실패:", error);
             }
+        );
 
-    `,
-    transparent: true,  // ✅ 투명 재질 허용
-    depthWrite: false,  // ✅ 깊이 버퍼 쓰기 비활성화 (투명 모델 처리 문제 방지)
-    side: THREE.DoubleSide // ✅ 양면 렌더링 설정
-});
+        // Shader 적용
+        refractionMaterial.onBeforeCompile = function (shader) {
+        
+            // `material.ior`이 존재하면 `ior`으로 변경
+            // if (shader.fragmentShader.includes("material.ior")) {
+            //     console.error("🚨 ERROR: material.ior is still present! Replacing with ior...");
+            //     shader.fragmentShader = shader.fragmentShader.replace(/material.ior/g, "ior");
+            // }
+        
+            // console.log("Updated Fragment Shader:\n", shader.fragmentShader);
+        };        
+    },
 
+    updateScene(interval, elapsed) {
+        // this.controls.update();
+        // this.stats1.update();
 
-
-// 6. GLB 모델 로드 및 유리 재질 적용
-const loader = new GLTFLoader();
-loader.load('../assets/glb/good.glb', function (gltf) {
-    const model = gltf.scene;
-    model.traverse((child) => {
-        if (child.isMesh) {
-            child.material = glassMaterial; // ✅ ShaderMaterial 적용
+        // GLTF 모델 애니메이션 적용
+        if (this.mesh) {
+            // this.mesh.rotation.z =
+            // (Math.sin(2 * elapsed * 0.4) + Math.sin(Math.PI / 2 * elapsed * 0.4)) *
+            // 0.2;
+            // this.mesh.rotation.y =
+            //   (Math.sin(2 * elapsed * 0.5) + Math.sin(Math.PI * elapsed * 0.5)) * 0.4;
+            // this.mesh.rotation.y += 0.1;
         }
-    });
+    },
+};
 
-    model.position.set(0, 0, 0);
-    model.scale.set(100, 100, 100);
-    scene.add(model);
 
-    const box = new THREE.Box3().setFromObject(model);
-    console.log("모델 크기:", box.getSize(new THREE.Vector3())); // ✅ 모델 크기 확인
+// createComposer를 사용하여 후처리 적용
+let composer = createComposer(renderer, scene, camera, (composer) => {
+    // console.log("EffectComposer 초기화 완료:", composer);
 });
 
+// runApp 실행 시 composer 추가
+runApp(app, scene, renderer, camera, true, undefined, composer);
 
-
-
-// 7. OrbitControls 추가
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-// 8. 애니메이션 루프 (GLB가 Plane을 통해 보이도록 설정)
-function animate() {
-    requestAnimationFrame(animate);
-
-    captureRenderTarget();
-    controls.update();
-    renderer.render(scene, camera);
-}
-animate();
-
-// 9. 반응형 리사이징 처리
-window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-});
